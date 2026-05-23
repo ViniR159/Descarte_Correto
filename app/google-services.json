@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "859279231597",
+    "project_id": "descarte-correto-5ec07",
+    "storage_bucket": "descarte-correto-5ec07.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:859279231597:android:fb2360c30b4b868c030d64",
+        "android_client_info": {
+          "package_name": "com.vinir.descartecorreto"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCHHLxukn296Ibmzufy8Wob_ajcw8lNc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
