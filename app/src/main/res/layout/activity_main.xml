@@ -11,12 +11,12 @@
 
     <View
         android:id="@+id/view"
-        android:layout_width="416dp"
-        android:layout_height="601dp"
+        android:layout_width="360dp"
+        android:layout_height="628dp"
         android:background="@color/dark_green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
@@ -25,15 +25,16 @@
         android:id="@+id/cardCadastro"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/border"
         android:padding="16dp"
         android:visibility="gone"
         app:cardCornerRadius="20dp"
         app:cardElevation="12dp"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -171,5 +172,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:srcCompat="@drawable/bem_vindo" />
+
+    <ScrollView
+        android:id="@+id/cardInfo"
+        android:layout_width="320dp"
+        android:layout_height="563dp"
+        android:background="@drawable/border"
+        android:padding="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lineSpacingExtra="6dp"
+                android:paddingBottom="24dp"
+                android:text="O Descarte Correto é um aplicativo acadêmico criado para incentivar a reciclagem de forma divertida e interativa.\n\nCom ele, você pode encontrar ecopontos próximos, reciclar virtualmente, ganhar pontos e desbloquear itens para personalizar seus pets.\n\nO projeto utiliza mapa interativo, geolocalização, Firebase e sistemas de progressão para demonstrar conceitos modernos do desenvolvimento mobile.\n\nEste aplicativo foi desenvolvido exclusivamente para fins educacionais."
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/confirmarLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="OK" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

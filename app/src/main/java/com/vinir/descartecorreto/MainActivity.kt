@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ScrollView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +29,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var cadastroSenha: EditText
     lateinit var fecharCadastro: Button
     lateinit var cadastrar: Button
+
+    lateinit var btnLogar: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -61,6 +64,9 @@ class MainActivity : AppCompatActivity() {
         fecharCadastro = findViewById(R.id.btnFecharCadastro)
         cadastrar = findViewById(R.id.btnCriarConta)
 
+        val cardInfo = findViewById<ScrollView>(R.id.cardInfo)
+        btnLogar = findViewById(R.id.confirmarLogin)
+
         login.setOnClickListener {
 
             val textoEmail = email.text.toString()
@@ -89,9 +95,7 @@ class MainActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
 
-                        startActivity(
-                            Intent(this, Inicial::class.java)
-                        )
+                        cardInfo.visibility = View.VISIBLE
 
                     }else{
 
@@ -153,6 +157,12 @@ class MainActivity : AppCompatActivity() {
                     ).show()
                 }
             }
+        }
+
+        btnLogar.setOnClickListener {
+            startActivity(
+                Intent(this, Inicial::class.java)
+            )
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
