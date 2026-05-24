@@ -95,9 +95,11 @@ class Inicial : AppCompatActivity() {
             Toast.LENGTH_SHORT
         )
 
-        atlInvFirebaase("bscPnts")
+        txtPnts = findViewById(R.id.txtPnts)
 
+        atlInvFirebaase("bscPnts")
         atlInvFirebaase("bscInv")
+
 
         btnLigarGps = findViewById(R.id.btnLigarGps)
         btnAbrirLoja = findViewById(R.id.btnLoja)
@@ -175,10 +177,6 @@ class Inicial : AppCompatActivity() {
         }
 
         recycler.adapter = adapter
-
-
-        txtPnts = findViewById(R.id.txtPnts)
-
 
         btnFecharJanela = findViewById(R.id.btnFecharJanela)
         centralizar = findViewById(R.id.btnCentralizar)
@@ -553,76 +551,131 @@ class Inicial : AppCompatActivity() {
 
     fun atlInvFirebaase(motivo: String){
 
-        if (uid != null) {
+        if (uid == null){
+            aviso.setText("Usuário não autenticado")
+            aviso.show()
+            return
+        }
 
-            when (motivo) {
+        when (motivo) {
+            "bscPnts" -> {
 
-                "bscPnts" -> {
+                db.collection("Usuarios")
+                    .document(uid)
+                    .get()
+                    .addOnSuccessListener { document ->
 
-                    db.collection("Usuarios")
-                        .document(uid)
-                        .get()
-                        .addOnSuccessListener { document ->
+                        if (document.exists()) {
 
-                            if (document.exists()) {
+                            pontos =
+                                document.getLong("pontos")
+                                    ?.toInt() ?: 0
 
-                                pontos =
-                                    document.getLong("pontos")
-                                        ?.toInt() ?: 0
+                            txtPnts.text = "$pontos"
 
-                                txtPnts.text =
-                                    "$pontos"
+                        } else {
 
-                            }
-
-                        }
-
-                }
-
-                "atlPnts" -> {
-
-                    db.collection("Usuarios")
-                        .document(uid)
-                        .update(
-                            "pontos",
-                            pontos
-                        )
-
-                }
-
-                "bscInv" -> {
-
-                    db.collection("Usuarios")
-                        .document(uid)
-                        .get()
-                        .addOnSuccessListener { document ->
-
-                            if (document.exists()) {
-
-                                inventario.clear()
-
-                                inventario.addAll(
-                                    document.get("inventario")
-                                            as? MutableList<String>
-                                        ?: mutableListOf()
+                            // cria documento caso não exista
+                            db.collection("Usuarios")
+                                .document(uid)
+                                .set(
+                                    mapOf(
+                                        "pontos" to 0,
+                                        "inventario" to inventario
+                                    )
                                 )
-                                adapter.notifyDataSetChanged()
-                            }
+
                         }
-                }
 
-                "atlInv" -> {
+                    }
+                    .addOnFailureListener { e ->
 
-                    db.collection("Usuarios")
-                        .document(uid)
-                        .update(
-                            "inventario",
-                            inventario
+                        aviso.setText(
+                            "Erro ao buscar pontos: ${e.message}"
                         )
+                        aviso.show()
 
-                    adapter.notifyDataSetChanged()
+                    }
+            }
 
-                }
+            "atlPnts" -> {
+
+                db.collection("Usuarios")
+                    .document(uid)
+                    .set(
+                        mapOf(
+                            "pontos" to pontos
+                        ),
+                        com.google.firebase.firestore.SetOptions.merge()
+                    )
+                    .addOnSuccessListener {
+
+                        println("Pontos atualizados")
+
+                    }
+                    .addOnFailureListener { e ->
+
+                        aviso.setText(
+                            "Erro ao salvar pontos: ${e.message}"
+                        )
+                        aviso.show()
+
+                    }
+            }
+            "bscInv" -> {
+
+                db.collection("Usuarios")
+                    .document(uid)
+                    .get()
+                    .addOnSuccessListener { document ->
+
+                        if (document.exists()) {
+
+                            inventario.clear()
+
+                            inventario.addAll(
+                                document.get("inventario")
+                                        as? MutableList<String>
+                                    ?: mutableListOf()
+                            )
+
+                            adapter.notifyDataSetChanged()
+
+                        }
+
+                    }
+                    .addOnFailureListener { e ->
+
+                        aviso.setText(
+                            "Erro ao buscar inventário: ${e.message}"
+                        )
+                        aviso.show()
+
+                    }
+            }
+            "atlInv" -> {
+
+                db.collection("Usuarios")
+                    .document(uid)
+                    .set(
+                        mapOf(
+                            "inventario" to inventario
+                        ),
+                        com.google.firebase.firestore.SetOptions.merge()
+                    )
+                    .addOnSuccessListener {
+
+                        adapter.notifyDataSetChanged()
+
+                    }
+                    .addOnFailureListener { e ->
+
+                        aviso.setText(
+                            "Erro ao salvar inventário: ${e.message}"
+                        )
+                        aviso.show()
+
+                    }
             }
         }
     }
